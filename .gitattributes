@@ -1,2 +1,3 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+*.ipynb filter=nbstripout strip-metadata=true removed_keys=kernelspec,execution_count,outputs
