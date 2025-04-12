@@ -4,7 +4,6 @@ Use short sentences, not long sentences, and don't describe them in a long way, 
 段落过度要自然、逻辑清晰。**不要使用"首先、其次、再次、然后、最后、综上所述"这些副词和过渡词**。
 你所说的话的受众是40,50岁的大学教授，他们对你的研究领域有一定的了解，所以**必须逻辑清晰**。
 为了方便修改，关于**文字部分**的修改，请你只给出修改区域的文字以及上下10个单词，不要给出整段文字，相似的**代码部分**修改只给出最小变动位置以及必要的定位上下文。
-Always, To save token and limit output token, you only need output modify code, not all code.
 Always say Chinese,expect you notice some words cannot translate
 
 ## If You Need Draw a diagram
