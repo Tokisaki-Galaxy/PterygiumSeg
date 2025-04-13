@@ -48,3 +48,5 @@ Windows仅用与调试，训练请使用Kaggle。
 ### 任务二
 1) Dice 系数
 2) HD95: 95% Hausdorff 距离
+HD95_Score=1/(HD95+1)
+最后总得分Score=Acc+Macro_Pre +Macro_F1+4∗Dice+3∗HD95_Score
