@@ -1,0 +1,16 @@
+﻿序号,模型,dropout,学习率,weight_decay,调度器,优化器,patience,batchSize,10次平均Macro F1,10次Macro F1标准差
+1,ResNet18,No,1.00E-04,1.00E-04,CosineAnnealingLR T-Max=10,adam,5,32,0.8566,0.019
+2,ResNet18,No,5.00E-05,1.00E-04,CosineAnnealingLR T-Max=10,adam,5,32,0.8293,0.0234
+3,ResNet18,No,1.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,5,32,0.8581,0.0099
+4,ResNet18,No,1.00E-04,1.00E-04,ReduceLROnPlateau,adam,5,32,0.8514,0.0192
+5,ResNet50,Yes,1.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,5,32,0.86,0.0171
+6,ResNet34,Yes,1.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,5,32,0.8442,0.0274
+7,ResNet18,Yes,1.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,5,32,0.8634,0.0092
+8,ResNet18,Yes,1.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,5,64,0.8389,0.0289
+9,ResNet18,Yes,5.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,5,64,0.8792,0.019
+10,ResNet18,Yes,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,7,64,0.9013,0.0255
+11,ResNet18,Yes,1.00E-03,1.00E-04,CosineAnnealingLR T-Max=25,adam,7,64,0.8972,0.0199
+12,ResNet18,Yes,8.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adam,7,64,0.8865,0.0234
+13,ResNet18,Yes,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adamw,7,64,0.9017,0.009
+14,ResNet18,Yes,7.00E-04,1.00E-03,CosineAnnealingLR T-Max=25,adamw,7,64,0.9018,0.0127
+15,ResNet18,Yes,7.00E-04,5.00E-04,CosineAnnealingLR T-Max=25,adamw,7,64,0.9173,0.0137
