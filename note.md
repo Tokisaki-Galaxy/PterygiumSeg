@@ -1,5 +1,7 @@
 # 调试笔记
 
+所有提到的解决方案都在第二天的提交中实现。
+
 ## 2025-04-13
 提交时间 2025-04-13 07:06
 
@@ -126,7 +128,31 @@ score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
 
 ### 问题
 
-在合并val_img和mask时，发现有些时候有些细小的毛边。所以修复了后处理的代码，加入其他步骤。
+在合并val_img和mask时，发现有些时候有些细小的毛边。
+
+另外在训练的时候，发现模型二有过拟合。
+```
+Epoch [23/30], Train Loss: 0.1607, Train Dice: 0.9312, Val Loss: 0.3716, Val Dice: 0.8583
+EarlyStopping计数器: 4 (共 7)。最佳分数仍为 0.8812。
+Epoch [24/30], Train Loss: 0.1494, Train Dice: 0.9375, Val Loss: 0.3953, Val Dice: 0.8508
+EarlyStopping计数器: 5 (共 7)。最佳分数仍为 0.8812。
+Epoch [25/30], Train Loss: 0.1410, Train Dice: 0.9417, Val Loss: 0.3621, Val Dice: 0.8685
+EarlyStopping计数器: 6 (共 7)。最佳分数仍为 0.8812。
+Epoch [26/30], Train Loss: 0.1335, Train Dice: 0.9453, Val Loss: 0.4100, Val Dice: 0.8517
+EarlyStopping计数器: 7 (共 7)。最佳分数仍为 0.8812。
+早停触发于第 26 轮。
+--- 训练完成 ---
+最终(最佳)验证Dice系数: 0.8812
+训练耗时: 9419.20 秒
+```
+train dice上升到0.94，但是val dice只有0.85。最后在官方验证集上，val dice只有0.77。
+
+### 可能的解决方案
+
+对于细小的毛边，在后处理的代码，加入其他步骤。
 1.开运算
 2.最大连通域
 3.闭运算
+
+对于过拟合问题，模型一上也观察到过拟合。所以尝试把模型一，模型二改成adamw优化器。
+模型二的dropout概率增加到0.5，weight_decay=7e-5，学习率降低到5e-4（之前的50%）。
