@@ -121,4 +121,7 @@ train_subset, val_subset = random_split(full_dataset_offline, [train_size, val_s
 
 ### 提交结果
 
+score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
+6.9576	0.9133	0.3714	    0.9111	0.7742	0.9221	    4387.8467
+
 ### 问题
