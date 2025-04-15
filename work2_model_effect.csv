@@ -1,6 +1,6 @@
-﻿序号,模型,BackBone,输入patching数据病灶相关度,数据增强,dropout,后处理,优化器,学习率调度器,学习率,weight_decay,patience,BachSize,HD95%,Dice,备注
+﻿序号,模型,BackBone,输入patching数据病灶相关度,数据增强,dropout,后处理,优化器,学习率调度器,学习率,weight_decay,patience,BachSize,官方验证集 HD95%,官方验证集 Dice,备注
 1,Unet,ResNet18,相关 0.01,仅水平翻转,无,无,adam,CosineAnnealingLR T_max=30,1.00E-03,1.00E-05,7,8,27153.915,0.4199,
 2,Unet,ResNet18,不相关,仅水平翻转,仅瓶颈层 0.4,级联模型1+最大连通域,adam,CosineAnnealingLR T_max=30,1.00E-03,1.00E-05,7,40,,,未运行完，耗时过长，始终无法收敛
 3,Unet,ResNet18,相关 0.01,仅水平翻转,仅瓶颈层 0.4,级联模型1+最大连通域,adam,CosineAnnealingLR T_max=30,1.00E-03,1.00E-05,7,40,4387.8467,0.7742,
-4,Unet,ResNet18,相关 0.01,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,7.00E-05,7,40,,,
+4,Unet,ResNet18,相关 0.01,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,7.00E-05,7,40,2065.45,0.8568,
 5,Unet3+,ResNet18,相关 0.01,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,7.00E-05,7,40,,,
