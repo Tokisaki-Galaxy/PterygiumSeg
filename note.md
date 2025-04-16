@@ -190,3 +190,27 @@ score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
 ### 任务二
 
 同样的，任务二，在文献里面使用PsPnet+ResNet50.也需要评估一下。
+
+## 2025-04-16
+
+### 排行榜
+
+和昨天的结果差不多，因为今天提交的结果比昨天差，所以分数也没上升。
+
+### 提交结果
+
+score   ACC     HD_score	MACROF1	DICE	MACROPRE	HD
+7.0376	0.9133	0.4056	    0.9119	0.77	0.9154	    4258.3813
+
+### 任务一
+
+昨天发现了一个在val集上有Micro F1 0.98的模型，今天尝试了一下，发现在官方test集上只有0.91，也就之前的水平。白高兴了。
+先这样吧，另外没必要上EfficientNet-B7，我怀疑那个论文有问题，这个问题用那种模型基本上肯定是过拟合的。而且论文中提到，使用EfficientNet-B7，Acc也就提高到0.95左右。
+
+### 任务二
+
+今天把UNET换成了UNET3+，但是dice和HD反而下降了。并且训练时间提升了30%-50%。
+今天为了把UNET换成UNET3+，改了很多代码，但是效果反而变差了。
+
+另外今天因为主模型变更，`predict_with_tiling_unfold`函数里的概率计算从`先对 Logits 的和应用 Sigmoid，再平均`改成`先平均 Logits，再 Sigmoid`。之前的方法`先对 Logits 的和应用 Sigmoid，再平均`，在UNET3+模型上，不知道为什么会映射到[0,0.5]之间。改成`先平均 Logits，再 Sigmoid`，就能映射到[0,1]之间了。
+
