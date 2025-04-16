@@ -4,3 +4,4 @@
 3,Unet,None,ResNet18,相关 0.01,仅水平翻转,仅瓶颈层 0.4,级联模型1+最大连通域,adam,CosineAnnealingLR T_max=30,1.00E-03,1.00E-05,7,40,0.8812,4387.8467,0.7742,训练耗时: 9419.20 秒
 4,Unet,None,ResNet18,相关 0.01,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,7.00E-05,7,40,0.897,2065.45,0.8568,总训练耗时: 12724.57 秒
 5,Unet3+,"[0.4, 0.3, 0.2, 0.1]",ResNet18,相关 0.01,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,7.00E-05,7,40,0.9024,,,服务器故障，保存失败。总训练耗时: 16562.35 秒
+6,Unet3+,"[0.4, 0.3, 0.2, 0.1]",ResNet18,相关 0.01,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,7.00E-05,7,40,0.9027,,,总训练耗时: 23135.24 秒

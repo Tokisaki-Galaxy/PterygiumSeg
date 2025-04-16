@@ -162,5 +162,5 @@ cython_debug/
 **.pth
 result/
 literature/
-output/
+output*/
 result.zip
