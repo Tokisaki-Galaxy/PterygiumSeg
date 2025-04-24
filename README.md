@@ -15,7 +15,7 @@ Windows仅用与调试，训练请使用Kaggle。
 每周60小时GPU时间。
 
 注意，任务2里面，现有的batch_size为40，占用15.4G GPU RAM。
-**若GPU RAM低于16G，需要调低。计算方法为3G GPU-RAM/8 batch。**
+**若GPU RAM低于16G，需要调低。UNET的计算方法为3G GPU-RAM/8 batch。**
 
 ### 尽量只使用单卡训练
 
