@@ -163,4 +163,4 @@ cython_debug/
 result/
 literature/
 output*/
-result.zip
+**.zip

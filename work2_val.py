@@ -4,8 +4,10 @@ import glob
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.font_manager # 确保字体管理器已导入
-from tqdm.autonotebook import tqdm # 用于显示进度
+import tqdm
+import zipfile
+import tempfile
+import shutil
 
 
 plt.rcParams['font.sans-serif'] = ['SimHei']
@@ -13,39 +15,12 @@ plt.rcParams['axes.unicode_minus'] = False
 
 # --- 配置路径 ---
 val_image_dir=      r'f:\val_img'
-output_mask_dir=    r'result\result-4-15\Segmentation_Results'
-output_mask_origin_output_dir = r'result\model_output' # 新增原始输出掩码路径
-output_dir = r'output' # 新增保存输出图像的目录
+output_mask_zip = 'mask.zip'
+output_mask_origin_zip = 'mask_original.zip'
+output_dir = r'output'
 
 # 创建输出目录（如果不存在）
 os.makedirs(output_dir, exist_ok=True)
-
-# 1. 原始验证集图像路径
-#    (使用之前代码块中定义的 val_image_dir)
-if 'val_image_dir' not in locals() or not os.path.isdir(val_image_dir):
-    print("错误：原始验证集图像路径 'val_image_dir' 未定义或无效。请确保它已在之前的单元格中设置。")
-    # 你可能需要根据实际情况手动设置:
-    # val_image_dir = "/kaggle/input/pterygium/val_img/val_img" # Kaggle 示例
-    # val_image_dir = "f:/val" # 本地示例
-else:
-    print(f"使用原始验证图像路径: {val_image_dir}")
-
-# 2. 预测掩码图像路径 (包含模型生成的 RGB 掩码)
-#    (使用之前代码块中定义的 output_mask_dir)
-if 'output_mask_dir' not in locals() or not os.path.isdir(output_mask_dir):
-    print("错误：预测掩码路径 'output_mask_dir' 未定义或无效。请确保它已在之前的单元格中设置，并且包含了预测生成的掩码文件。")
-    # 你可能需要根据实际情况手动设置:
-    # output_mask_dir = "/kaggle/working/mask" # Kaggle 示例
-    # output_mask_dir = "/content/mask" # Colab 示例
-    # output_mask_dir = "f:/mask" # 本地示例
-else:
-    print(f"使用预测掩码路径: {output_mask_dir}")
-
-# 3. 原始输出掩码路径
-if 'output_mask_origin_output_dir' not in locals() or not os.path.isdir(output_mask_origin_output_dir):
-    print("错误：原始输出掩码路径 'output_mask_origin_output_dir' 未定义或无效。")
-else:
-    print(f"使用原始输出掩码路径: {output_mask_origin_output_dir}")
 
 # --- 可视化函数 ---
 def visualize_overlay(original_img_path, mask_img_path, origin_output_mask_path=None, save_path=None):
@@ -121,35 +96,69 @@ def visualize_overlay(original_img_path, mask_img_path, origin_output_mask_path=
     except Exception as e:
         print(f"处理图像 {os.path.basename(original_img_path)} 时发生错误: {e}")
 
+# --- 解压函数 ---
+def extract_zip(zip_path, extract_to):
+    """解压 zip 文件到指定目录"""
+    try:
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            print(f"正在解压 {zip_path} 到 {extract_to}...")
+            zip_ref.extractall(extract_to)
+            print(f"解压完成。")
+        return True
+    except FileNotFoundError:
+        print(f"错误: 找不到 zip 文件 {zip_path}")
+        return False
+    except Exception as e:
+        print(f"解压 {zip_path} 时出错: {e}")
+        return False
 
 # --- 执行可视化 ---
-# 检查路径是否有效
 if 'val_image_dir' in locals() and os.path.isdir(val_image_dir) and \
-        'output_mask_dir' in locals() and os.path.isdir(output_mask_dir):
+    os.path.isfile(output_mask_zip) and os.path.isfile(output_mask_origin_zip):
 
-    # 查找所有原始验证图像 (例如 .png, 根据你的文件类型修改)
-    val_image_paths = sorted(glob.glob(os.path.join(val_image_dir, "*.png")))
+    # 创建临时目录来解压文件
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_mask_dir = os.path.join(temp_dir, "extracted_masks")
+        temp_mask_origin_dir = os.path.join(temp_dir, "extracted_masks_origin")
 
-    if not val_image_paths:
-        print(f"错误：在目录 {val_image_dir} 中未找到任何 .png 图像文件。")
-    else:
-        print(f"找到 {len(val_image_paths)} 张验证图像，开始可视化...")
+        # 解压掩码文件
+        masks_extracted = extract_zip(output_mask_zip, temp_mask_dir)
+        origin_masks_extracted = extract_zip(output_mask_origin_zip, temp_mask_origin_dir)
 
-        # 遍历所有找到的验证图像
-        for img_path in tqdm(val_image_paths, desc="可视化进度"):
-            # 构建对应的掩码文件路径
-            base_name = os.path.basename(img_path)
-            mask_path = os.path.join(output_mask_dir, base_name) # 假设掩码文件名与原图名一致
-            origin_output_mask_path = os.path.join(output_mask_origin_output_dir, base_name) # 原始输出掩码路径
-            save_path = os.path.join(output_dir, base_name) # 保存路径
+        if not masks_extracted or not origin_masks_extracted:
+            print("错误：无法解压必要的掩码文件，可视化中止。")
+        else:
+            # 查找所有原始验证图像 (例如 .png, 根据你的文件类型修改)
+            val_image_paths = sorted(glob.glob(os.path.join(val_image_dir, "*.png")))
 
-            # 检查对应的掩码文件是否存在
-            if os.path.exists(mask_path):
-                # 调用可视化函数，包含第二个掩码和保存路径
-                visualize_overlay(img_path, mask_path, origin_output_mask_path, save_path)
+            if not val_image_paths:
+                print(f"错误：在目录 {val_image_dir} 中未找到任何 .png 图像文件。")
             else:
-                print(f"警告：找不到对应的预测掩码文件 {mask_path}，跳过图像 {base_name}。")
+                print(f"找到 {len(val_image_paths)} 张验证图像，开始可视化...")
 
-        print("\n所有验证结果可视化完成。")
+                # 遍历所有找到的验证图像
+                for img_path in tqdm(val_image_paths, desc="可视化进度"):
+                    # 构建对应的掩码文件路径 (在临时目录中查找)
+                    base_name = os.path.basename(img_path)
+                    mask_path = os.path.join(temp_mask_dir, base_name) # 在解压后的目录查找
+                    origin_output_mask_path = os.path.join(temp_mask_origin_dir, base_name) # 在解压后的目录查找
+                    save_path = os.path.join(output_dir, base_name) # 保存路径
+
+                    # 检查对应的掩码文件是否存在
+                    if os.path.exists(mask_path):
+                        # 调用可视化函数，包含第二个掩码和保存路径
+                        visualize_overlay(img_path, mask_path, origin_output_mask_path, save_path)
+                    else:
+                        print(f"警告：在解压目录中找不到对应的预测掩码文件 {mask_path}，跳过图像 {base_name}。")
+
+                print("\n所有验证结果可视化完成。")
+
 else:
-    print("错误：无法执行可视化，因为 'val_image_dir' 或 'output_mask_dir' 无效。")
+    error_msg = "错误：无法执行可视化，因为 "
+    if 'val_image_dir' not in locals() or not os.path.isdir(val_image_dir):
+        error_msg += "'val_image_dir' 无效；"
+    if not os.path.isfile(output_mask_zip):
+        error_msg += f"掩码 zip 文件 '{output_mask_zip}' 不存在；"
+    if not os.path.isfile(output_mask_origin_zip):
+        error_msg += f"原始掩码 zip 文件 '{output_mask_origin_zip}' 不存在；"
+    print(error_msg.strip('；'))
