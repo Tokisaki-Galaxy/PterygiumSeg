@@ -4,7 +4,7 @@ import glob
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-import tqdm
+from tqdm import tqdm
 import zipfile
 import tempfile
 import shutil
