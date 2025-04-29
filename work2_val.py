@@ -30,11 +30,18 @@ def visualize_overlay(original_img_path, mask_img_path, origin_output_mask_path=
         # 加载预测掩码 (RGB)
         mask_image = Image.open(mask_img_path).convert("RGB")
 
-        # 检查尺寸是否一致 (可选，但推荐)
+        original_width, original_height = original_image.size
+        # 检查尺寸是否一致 (可选，但推荐) - 检查原始尺寸
         if original_image.size != mask_image.size:
             print(f"警告：图像 {os.path.basename(original_img_path)} ({original_image.size}) "
-                f"和掩码 {os.path.basename(mask_img_path)} ({mask_image.size}) 尺寸不匹配，跳过可视化。")
+                f"和掩码 {os.path.basename(mask_img_path)} ({mask_image.size}) 原始尺寸不匹配，跳过可视化。")
             return
+
+        new_size = (original_width // 4, original_height // 4)
+        resample_filter = Image.Resampling.LANCZOS # 高质量缩放
+
+        original_image = original_image.resize(new_size, resample_filter)
+        mask_image = mask_image.resize(new_size, resample_filter)
 
         # 1. 将原图转为灰度，再转回 RGB 以便合并
         grayscale_image = original_image.convert("L")
