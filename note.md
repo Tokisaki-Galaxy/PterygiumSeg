@@ -310,6 +310,7 @@ score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
 今天28号和明天29号提交的基本上模型输出一样，只是手动改了一下。
 
 ## 2025-04-29
+今天改进完了才提交
 score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
 7.9133	0.9267	0.486	    0.9263	0.9191	0.9261	    362.4233
 
@@ -319,3 +320,12 @@ score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
 
 今天不太想搞太多，把patch调到512*512，继续用debug模式，然后把最佳阈值探测-0.05，再试试吧。
 另外根据昨天的训练分析，似乎unet+attention模型效果真的比unet差。
+
+## 2025-04-30
+今天改进完了才提交
+score	ACC	    HD_score	MACROF1	DICE	MACROPRE	HD
+8.029	0.9333	0.5106	    0.9333	0.9243	0.9333	    261.3613
+patch叠加依然有问题，在patch交际的时候总是有直角。我把最佳阈值-0.1。从官方test上看，似乎挺好的，可以试试更高？
+不过现在切成零碎的patch可能不适合现在的情况。得再想想还有啥办法。
+
+级联处理需要改进。建议改成投票机制。如果一和二都是健康就健康，如果一是健康二是病灶就判断病灶大小。

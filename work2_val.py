@@ -17,7 +17,6 @@ output_mask_zip = 'mask.zip'
 output_mask_origin_zip = 'mask_original.zip'
 output_dir = r'output'
 
-# 创建输出目录（如果不存在）
 os.makedirs(output_dir, exist_ok=True)
 
 # --- 可视化函数 ---
@@ -139,14 +138,12 @@ if 'val_image_dir' in locals() and os.path.isdir(val_image_dir) and \
         temp_mask_dir = os.path.join(temp_dir, "extracted_masks")
         temp_mask_origin_dir = os.path.join(temp_dir, "extracted_masks_origin")
 
-        # 解压掩码文件
         masks_extracted = extract_zip(output_mask_zip, temp_mask_dir)
         origin_masks_extracted = extract_zip(output_mask_origin_zip, temp_mask_origin_dir)
 
         if not masks_extracted or not origin_masks_extracted:
             print("错误：无法解压必要的掩码文件，可视化中止。")
         else:
-            # 查找所有原始验证图像 (例如 .png, 根据你的文件类型修改)
             val_image_paths = sorted(glob.glob(os.path.join(val_image_dir, "*.png")))
 
             if not val_image_paths:
@@ -154,9 +151,7 @@ if 'val_image_dir' in locals() and os.path.isdir(val_image_dir) and \
             else:
                 print(f"找到 {len(val_image_paths)} 张验证图像，开始可视化...")
 
-                # 遍历所有找到的验证图像
                 for img_path in tqdm(val_image_paths, desc="可视化进度"):
-                    # 构建对应的掩码文件路径 (在临时目录中查找)
                     base_name = os.path.basename(img_path)
                     mask_path = os.path.join(temp_mask_dir, base_name) # 在解压后的目录查找
                     origin_output_mask_path = os.path.join(temp_mask_origin_dir, base_name) # 在解压后的目录查找
