@@ -21,3 +21,4 @@
 20,1296*864,0,0.3,Yes,512*512,Unet+ResNet34,,BCE=0.6+Dice=0.4,None,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,29,7.00E-05,7,36,0.9107,0.8467（61个样本）,369.70（61个样本）,,,
 21,1296*864,0,0.3,Yes,256*256,DeepLabV3,,BCE=0.6+Dice=0.4,None,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,10,7.00E-05,7,140,0.7043,0.7872（57个样本）,582.83（57个样本）,,,
 22,1296*864,0,0.3,Yes,256*256,Unet+ResNet34,,BCE=0.6+Dice=0.4,None,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,15,7.00E-05,7,140,0.8821,0.87（57个样本）,298.41（57个样本）,0.9243,261.3613,删除级联处理，手动视觉进行级联
+23,1296*864,0.1,1,Yes,256*256,Unet+ResNet34,,BCE=0.6+Dice=0.4,None,albumentations,仅瓶颈层 0.5,级联模型1+开运算+最大连通域+闭运算,adamw,CosineAnnealingLR T_max=30,5.00E-04,15,7.00E-05,7,140,,,,,,
