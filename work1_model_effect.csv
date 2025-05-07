@@ -16,8 +16,9 @@
 15,224*224,ResNet18,0.5,7.00E-04,5.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9173,0.0137,,,,
 16,224*224,ResNet18,0.5,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9225,0.0136,,,,"数据增强的时候增加模拟高光p=0.3, max_highlights=3, radius_range=(5, 12)"
 17,224*224,ResNet18,0.5,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9174,0.0151,,,,下面没写就是下同
-18,224*224,ResNet34,0.5,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9353,0.0147,,,,
+18,224*224,ResNet34,0.5,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9353,0.0147,0.9263,0.9261,0.9267,
 19,224*224,ResNet50,0.5,7.00E-04,1.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9154,0.0293,,,,
 20,224*224,ResNet50,0.5,7.00E-04,5.00E-04,CosineAnnealingLR T-Max=25,adamw,25,7,64,0.9242,0.0148,,,,
-21,512*512,ResNet34,0.5,3.00E-04,4.00E-04,CosineAnnealingLR T-Max=25,adamw,19(-7),7,64,0.927,0.0111,,,,过拟合
-22,512*512,ResNet34,0.5,3.00E-04,4.00E-04,CosineAnnealingLR T-Max=25,adamw,13(-7),7,64,,,,,,ResNet18在确认是否健康上（0和12）很好用，但是在确认病情（1和2）上不好。但是ResNet34在确认病情（12）上很好用。
+21,224*224,ResNet34,0.5,3.00E-04,4.00E-04,CosineAnnealingLR T-Max=25,adamw,19(-7),7,64,0.927,0.0111,,,,过拟合
+22,224*224,ResNet34,0.5,3.00E-04,4.00E-04,CosineAnnealingLR T-Max=25,adamw,13(-7),7,64,,,,,,ResNet18在确认是否健康上（0和12）很好用，但是在确认病情（1和2）上不好。但是ResNet34在确认病情（12）上很好用。
+23,224*224,boost ResNet18/34/50,,,,,,,,,,,0.795,0.7992,0.8,
