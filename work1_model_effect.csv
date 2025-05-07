@@ -22,3 +22,4 @@
 21,224*224,ResNet34,0.5,3.00E-04,4.00E-04,CosineAnnealingLR T-Max=25,adamw,19(-7),7,64,0.927,0.0111,,,,过拟合
 22,224*224,ResNet34,0.5,3.00E-04,4.00E-04,CosineAnnealingLR T-Max=25,adamw,13(-7),7,64,,,,,,ResNet18在确认是否健康上（0和12）很好用，但是在确认病情（1和2）上不好。但是ResNet34在确认病情（12）上很好用。
 23,224*224,boost ResNet18/34/50,,,,,,,,,,,0.795,0.7992,0.8,
+24,224*224,ConvNeXt Base,0.5,3.00E-03,5.00E-04,CosineAnnealingLR T-Max=25,adamw,,10,64,,,,,,
