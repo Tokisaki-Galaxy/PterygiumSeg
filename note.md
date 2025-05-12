@@ -342,3 +342,20 @@ patch叠加依然有问题，在patch交际的时候总是有直角。我把最�
 最后重新想了一下，三分类可能效果还是不好，又试试了之前一直想做的两个双分类stacking模型叠加。
 第一个模型先用['ResNet18Classifier','EfficientNetB0Classifier', 'DenseNet121Classifier']加上元模型检测是否是健康。
 接着由第二个模型用['ResNet50Classifier','EfficientNetB4Classifier', 'DenseNet201Classifier']加上元模型检测是否是病灶。
+
+## 2025-5-8
+今天早上测昨天提到的方法，显示下面这样，当时给我吓一跳。
+```
+--- Stacked Ensemble (两阶段) K-Fold OOF 评估结果 (3 类) ---
+OOF 准确率: 0.9933
+OOF Macro Precision: 0.9933
+OOF Macro F1: 0.9933
+
+OOF 混淆矩阵:
+[[150   0   0]
+ [  0 149   1]
+ [  0   2 148]]
+ ```
+但是中途反复出现最终模型因为各种代码问题无法正常运行，所以晚上才拿到最后的分类结果。激动了一天的心情，甚至都想着去arXiv上发预印本了。
+结果最后去官方test集上测试，发现惨不忍睹。acc，macrof1/pre都只有0.90。还不如之前单模型最高0.93。气死了。然后test刚刚出结果，老师给我发个笑哭的表情，看着好像嘲讽我（
+另外，无法访问test上的混淆矩阵，图像都是同一巨大数据集里划分的，所以不存在什么拍摄设备的问题，非常好奇为啥会这样。
